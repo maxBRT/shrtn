@@ -17,9 +17,7 @@ func (s *Server) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	case "/":
 		http.ServeFile(w, r, "./public/index.html")
 	default:
-		if s.env == "local" {
-			url = fmt.Sprintf("https://localhost:8080%s", url)
-		}
+		url = fmt.Sprintf("https://shrtn.it.com%s", url)
 		fmt.Println(url)
 		repo := shorturl.NewUrlRepository(s.db.DB())
 		baseUrl, err := repo.GetLink(url)
@@ -54,9 +52,7 @@ func (s *Server) newUrlHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if s.env == "local" {
-		u.ShortUrl = fmt.Sprintf("https://localhost:8080/%s", u.ShortUrl)
-	}
+	u.ShortUrl = fmt.Sprintf("https://shrtn.it.com/%s", u.ShortUrl)
 
 	if err := u.Validate(); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
