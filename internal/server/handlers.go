@@ -13,18 +13,23 @@ type UrlResponse struct {
 
 func (s *Server) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
-	if s.env == "local" {
-		url = fmt.Sprintf("https://localhost:8080%s", url)
+	switch url {
+	case "/":
+		http.ServeFile(w, r, "./public/index.html")
+	default:
+		if s.env == "local" {
+			url = fmt.Sprintf("https://localhost:8080%s", url)
+		}
+		fmt.Println(url)
+		repo := shorturl.NewUrlRepository(s.db.DB())
+		baseUrl, err := repo.GetLink(url)
+		fmt.Println(baseUrl)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, baseUrl, http.StatusMovedPermanently)
 	}
-	fmt.Println(url)
-	repo := shorturl.NewUrlRepository(s.db.DB())
-	baseUrl, err := repo.GetLink(url)
-	fmt.Println(baseUrl)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, baseUrl, http.StatusMovedPermanently)
 }
 
 func (s *Server) getUrlsHandler(w http.ResponseWriter, r *http.Request) {
@@ -61,6 +66,7 @@ func (s *Server) newUrlHandler(w http.ResponseWriter, r *http.Request) {
 	repo := shorturl.NewUrlRepository(s.db.DB())
 	url, err := repo.CreateLink(u)
 	if err != nil {
+		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -1,0 +1,4 @@
+routes:
+  - name: "shrtn"             
+    paths: ["/*"]       
+    backend: "localhost:8080" 

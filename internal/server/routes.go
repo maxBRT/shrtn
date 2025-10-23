@@ -9,8 +9,10 @@ import (
 func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
-	// Register routes
+	// Serve static files from public directory
+	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 
+	// Register routes
 	mux.HandleFunc("POST /urls", s.newUrlHandler)
 	mux.HandleFunc("GET /urls", s.getUrlsHandler)
 

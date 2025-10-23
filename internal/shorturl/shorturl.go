@@ -7,24 +7,24 @@ import (
 )
 
 type Url struct {
-	BaseUrl  string `json:"base_url"`
-	ShortUrl string `json:"short_url"`
+	BaseUrl  string `json:"baseUrl"`
+	ShortUrl string `json:"shortUrl"`
 }
 
 func (u *Url) Validate() error {
 	if u.BaseUrl == "" {
-		return errors.New("base_url is required")
+		return errors.New("baseUrl is required")
 	}
 	if u.ShortUrl == "" {
-		return errors.New("short_url is required")
+		return errors.New("shortUrl is required")
 	}
 	_, err := url.Parse(u.BaseUrl)
 	if err != nil {
-		return errors.New("base_url is not a valid url")
+		return errors.New("baseUrl is not a valid url")
 	}
 	_, err = url.Parse(u.ShortUrl)
 	if err != nil {
-		return errors.New("short_url is not a valid url")
+		return errors.New("shortUrl is not a valid url")
 	}
 	return nil
 }
@@ -42,7 +42,7 @@ func NewUrlRepository(db *sql.DB) *UrlRepository {
 func (r *UrlRepository) CreateLink(url Url) (*Url, error) {
 	query := `INSERT INTO urls (base_url, short_url) VALUES ($1, $2) RETURNING *`
 	var u Url
-	err := r.db.QueryRow(query, url.BaseUrl, url.ShortUrl).Scan(u.BaseUrl, u.ShortUrl)
+	err := r.db.QueryRow(query, url.BaseUrl, url.ShortUrl).Scan(&u.BaseUrl, &u.ShortUrl)
 	return &u, err
 }
 
