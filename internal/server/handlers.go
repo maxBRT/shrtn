@@ -30,18 +30,6 @@ func (s *Server) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) getUrlsHandler(w http.ResponseWriter, r *http.Request) {
-	repo := shorturl.NewUrlRepository(s.db.DB())
-	urls, err := repo.GetLinks()
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(urls)
-}
-
 func (s *Server) newUrlHandler(w http.ResponseWriter, r *http.Request) {
 	var u shorturl.Url
 

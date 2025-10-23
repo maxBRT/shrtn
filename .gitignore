@@ -34,3 +34,5 @@ shrtn
 # OS X generated file
 .DS_Store
 
+# Deploy script
+deploy.sh

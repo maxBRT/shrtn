@@ -46,6 +46,12 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 2px 2px #001220;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+    }
 }
 
 .text-container {
