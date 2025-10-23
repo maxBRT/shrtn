@@ -24,16 +24,17 @@ body {
 
 
 .wrapper {
+    padding-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-wrap: wrap;
     height: 100vh;
-    margin: 5rem;
-    padding: 20px;
 }
 
 .form-container {
+    margin: 20px;
     display: flex;
     background-color: white;
     color: #001220;
@@ -48,6 +49,7 @@ body {
 }
 
 .text-container {
+    margin: 20px;
     display: flex;
     flex-direction: column;
     max-width: 500px;
@@ -81,7 +83,7 @@ form {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     margin: 20px 0;
 }
 

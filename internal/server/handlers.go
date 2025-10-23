@@ -1,10 +1,10 @@
 package server
 
 import (
-	"Lnkio/internal/shorturl"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"shrtn/internal/shorturl"
 )
 
 type UrlResponse struct {
